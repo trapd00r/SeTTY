@@ -1,0 +1,41 @@
+#!/usr/bin/perl
+use strict;
+use warnings FATAL => 'all';
+
+my $commands = {
+  # toggle scrollbar on/off
+  scrollbar => "\e[?30t",
+
+  # toggle 132/80 columns mode
+  columns   => "\e[?3t",
+
+  # toggle reverse video
+  reverse   => "\e[?5t",
+
+  # toggle wraparound mode (XXX very useful for viewing html/xml/json)
+  wrap      => "\e[?7t",
+
+  # should backspace key send BS or DEL?
+  backspace => "\e[?67t",
+
+  # scroll to bottom on TTY output
+  ttyscroll => "\e[?1010t",
+
+  # scroll to bottom when key is pressed
+  scrollkey => "\e[?1011t",
+
+
+
+};
+
+if(!@ARGV) {
+  print "\e[1mOptions\e[m:\n";
+  print "    $_\n" for keys %$commands;
+  exit;
+}
+
+my $action = shift;
+
+
+
+printf $commands->{ $action };

@@ -1,0 +1,57 @@
+=pod
+
+=head1 NAME
+
+termprop - set terminal properties
+
+=head1 DESCRIPTION
+
+=head1 INSTALLATION
+
+=head1 FEATURES
+
+=head1 OPTIONS
+
+  -h,    --help             show the help and exit
+  -m,    --man              show the manual and exit
+  -v,    --version          show version info and exit
+
+=head1 ENVIRONMENT
+
+=head1 AUTHOR
+
+  Magnus Woldrich
+  CPAN ID: WOLDRICH
+  magnus@trapd00r.se
+  http://japh.se
+
+=head1 CONTRIBUTORS
+
+None required yet.
+
+=head1 REPORTING BUGS
+
+Report bugs and/or feature requests to <m@japh.se>, on L<rt.cpan.org>
+or L<http://github.com/trapd00r/termprop/issues>.
+
+=head1 COPYRIGHT
+
+Copyright 2011 the B<termprop> L</AUTHOR> and L</CONTRIBUTORS> as
+listed above.
+
+=head1 LICENSE
+
+This application is free software; you may redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=head1 SEE ALSO
+
+L<urxvt(7)>
+
+L<urxvt(1)>
+
+L<console_codes(4)>
+
+L<ctlseq|http://devel.japh.se/App-termprop/doc/ctlseq.txt>
+
+=cut
