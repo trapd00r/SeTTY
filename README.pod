@@ -10,14 +10,17 @@ setty [COMMAND]
 
 =head1 COMMANDS
 
-    alternate  use the alternate screen buffer
-    backspace  toggle if the backspace key should send BS or DEL
-    columns    toggle 132/80 columns mode
-    reverse    toggle reverse video
-    scrollbar  toggle scrollbar visibility
-    scrollkey  scroll to bottom when key is pressed
-    ttyscroll  scroll to bottom on TTY output
-    wrap       toggle wraparound mode.
+    alternate   alternate screen mode
+    backspace   backspace/delete
+    columns     column mode
+    cursor      text cursor enable mode
+    jumpscroll  scrolling mode
+    reverse     toggle reverse video
+    scrollbar   toggle scrollbar visibility
+    scrollkey   scroll to bottom on keypress
+    ttyscroll   scroll to bottom on TTY output
+    vt52        ANSI/VT52 mode
+    wrap        toggle wraparound mode.
 
 =head1 OPTIONS
 

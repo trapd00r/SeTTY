@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 use strict;
-use warnings FATAL => 'all';
+#use warnings FATAL => 'all';
 my  $APP     = 'SeTTY';
-our $VERSION = '0.010';
+our $VERSION = '0.024';
 
 my $options;
 
@@ -12,11 +12,15 @@ if(!@ARGV) {
 $APP v$VERSION
 Usage: $APP [COMMAND]
 
-  \e[1mOPTIONS\e[m
 ...
 
   for my $option(sort(keys(%{ $options }))) {
-    printf("%13s  %s\n", $option, $options->{$option}->{description});
+    print "\n";
+
+    printf("\e[1m$option\e[m - %s\n", $options->{ $option }->{description});
+
+    printf("  set: %s\n", $options->{ $option }->{desc_set});
+    printf("reset: %s\n", $options->{ $option }->{desc_reset});
   }
   exit;
 }
@@ -30,37 +34,69 @@ print $options->{ $action }->{command};
 
 BEGIN {
   $options = {
-    scrollbar => {
+    scrollbar  => {
       command     => "\e[?30t",
       description => 'toggle scrollbar visibility',
     },
-    columns   => {
+    columns    => {
       command     => "\e[?3t",
-      description => 'toggle 132/80 columns mode',
+      description => 'column mode',
+      desc_set    => 'use a 132 column screen',
+      desc_reset  => 'use a 80 column screen',
     },
-    reverse   => {
+    reverse    => {
       command     => "\e[?5t",
       description => 'toggle reverse video',
+      desc_set    => 'make the screen white with black characters',
+      desc_reset  => 'make the screen black with white characters',
     },
-    wrap      => {
+    wrap       => {
       command     => "\e[?7t",
       description => 'toggle wraparound mode.',
+      desc_set    => 'autowrap at EOL (default)',
+      desc_reset  => 'no wrapping',
     },
-    backspace => {
+    backspace  => {
       command     => "\e[?67t",
-      description => 'toggle if the backspace key should send BS or DEL',
+      description => 'backspace/delete',
+      desc_set    => 'backspace sends BS',
+      desc_reset  => 'backspace sends DEL',
     },
-    ttyscroll => {
+    ttyscroll  => {
       command     => "\e[?1010t",
       description => 'scroll to bottom on TTY output',
+      desc_set    => 'scroll to bottom on TTY output',
+      desc_reset  => 'do not scroll to bottom on TTY output',
     },
-    scrollkey => {
+    scrollkey  => {
       command     => "\e[?1011t",
-      description => "scroll to bottom when key is pressed",
+      description => 'scroll to bottom on keypress',
+      desc_set    => 'scroll to bottom on keypress',
+      desc_reset  => 'do not scroll to bottom on keypress',
     },
-    alternate => {
+    alternate  => {
       command     => "\e[?1049t",
-      description => 'use the alternate screen buffer',
+      description => 'alternate screen mode',
+      desc_set    => 'use alternate screen buffer',
+      desc_reset  => 'use normal screen buffer',
+    },
+    jumpscroll => {
+      command     => "\e[?4t",
+      description => 'scrolling mode',
+      desc_set    => 'scroll at a maximum rate of six lines/sec',
+      desc_reset  => 'jump one line at a time',
+    },
+    vt52       => {
+      command     => "\e[2t",
+      description => 'ANSI/VT52 mode',
+      desc_set    => 'Only ANSI compatible escape sequences recognized',
+      desc_reset  => 'Only VT52 compatible escape sequences recognized',
+    },
+    cursor     => {
+      command     => "\e[?25t",
+      description => 'text cursor enable mode',
+      desc_set    => 'visible',
+      desc_reset  => 'invisible',
     },
   };
 }
@@ -77,14 +113,17 @@ setty [COMMAND]
 
 =head1 COMMANDS
 
-    alternate  use the alternate screen buffer
-    backspace  toggle if the backspace key should send BS or DEL
-    columns    toggle 132/80 columns mode
-    reverse    toggle reverse video
-    scrollbar  toggle scrollbar visibility
-    scrollkey  scroll to bottom when key is pressed
-    ttyscroll  scroll to bottom on TTY output
-    wrap       toggle wraparound mode.
+    alternate   alternate screen mode
+    backspace   backspace/delete
+    columns     column mode
+    cursor      text cursor enable mode
+    jumpscroll  scrolling mode
+    reverse     toggle reverse video
+    scrollbar   toggle scrollbar visibility
+    scrollkey   scroll to bottom on keypress
+    ttyscroll   scroll to bottom on TTY output
+    vt52        ANSI/VT52 mode
+    wrap        toggle wraparound mode.
 
 =head1 OPTIONS
 
