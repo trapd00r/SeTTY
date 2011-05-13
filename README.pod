@@ -1,20 +1,83 @@
+#!/usr/bin/perl
+use strict;
+use warnings FATAL => 'all';
+my  $APP     = 'termprop';
+our $VERSION = '0.010';
+
+my $options;
+
+if(!@ARGV) {
+
+  for my $option(sort(keys(%{ $options }))) {
+    printf("%13s %s\n", $option, $options->{$option}->{description});
+  }
+  exit;
+}
+
+my $action = shift;
+
+
+print $options->{ $action }->{command};
+
+BEGIN {
+  $options = {
+    scrollbar => {
+      command     => "\e[?30t",
+      description => 'toggle scrollbar visibility',
+    },
+    columns   => {
+      command     => "\e[?3t",
+      description => 'toggle 132/80 columns mode',
+    },
+    reverse   => {
+      command     => "\e[?5t",
+      description => 'toggle reverse video',
+    },
+    wrap      => {
+      command     => "\e[?7t",
+      description => 'toggle wraparound mode.',
+    },
+    backspace => {
+      command     => "\e[?67t",
+      description => 'toggle if the backspace key should send BS or DEL',
+    },
+    ttyscroll => {
+      command     => "\e[?1010t",
+      description => 'scroll to bottom on TTY output',
+    },
+    scrollkey => {
+      command     => "\e[?1011t",
+      description => "scroll to bottom when key is pressed",
+    },
+    alternate => {
+      command     => "\e[?1049t",
+      description => 'use the alternate screen buffer',
+    },
+  };
+}
+
 =pod
 
 =head1 NAME
 
 termprop - set terminal properties
 
-=head1 DESCRIPTION
+=head1 COMMANDS
 
-=head1 INSTALLATION
-
-=head1 FEATURES
+    alternate         use the alternate screen buffer
+    backspace         toggle if the backspace key should send BS or DEL
+      columns         toggle 132/80 columns mode
+      reverse         toggle reverse video
+    scrollbar         toggle scrollbar visibility
+    scrollkey         scroll to bottom when key is pressed
+    ttyscroll         scroll to bottom on TTY output
+         wrap         toggle wraparound mode.
 
 =head1 OPTIONS
 
-  -h,    --help             show the help and exit
-  -m,    --man              show the manual and exit
-  -v,    --version          show version info and exit
+    -h,    --help     show the help and exit
+    -m,    --man      show the manual and exit
+    -v,    --version  show version info and exit
 
 =head1 ENVIRONMENT
 
@@ -41,7 +104,7 @@ listed above.
 
 =head1 LICENSE
 
-This application is free software; you may redistribute it and/or modify it
+This application is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
 =head1 SEE ALSO

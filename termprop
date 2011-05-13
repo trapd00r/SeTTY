@@ -1,41 +1,120 @@
 #!/usr/bin/perl
 use strict;
 use warnings FATAL => 'all';
+my  $APP     = 'termprop';
+our $VERSION = '0.010';
 
-my $commands = {
-  # toggle scrollbar on/off
-  scrollbar => "\e[?30t",
-
-  # toggle 132/80 columns mode
-  columns   => "\e[?3t",
-
-  # toggle reverse video
-  reverse   => "\e[?5t",
-
-  # toggle wraparound mode (XXX very useful for viewing html/xml/json)
-  wrap      => "\e[?7t",
-
-  # should backspace key send BS or DEL?
-  backspace => "\e[?67t",
-
-  # scroll to bottom on TTY output
-  ttyscroll => "\e[?1010t",
-
-  # scroll to bottom when key is pressed
-  scrollkey => "\e[?1011t",
-
-
-
-};
+my $options;
 
 if(!@ARGV) {
-  print "\e[1mOptions\e[m:\n";
-  print "    $_\n" for keys %$commands;
+
+  for my $option(sort(keys(%{ $options }))) {
+    printf("%13s %s\n", $option, $options->{$option}->{description});
+  }
   exit;
 }
 
 my $action = shift;
 
 
+print $options->{ $action }->{command};
 
-printf $commands->{ $action };
+BEGIN {
+  $options = {
+    scrollbar => {
+      command     => "\e[?30t",
+      description => 'toggle scrollbar visibility',
+    },
+    columns   => {
+      command     => "\e[?3t",
+      description => 'toggle 132/80 columns mode',
+    },
+    reverse   => {
+      command     => "\e[?5t",
+      description => 'toggle reverse video',
+    },
+    wrap      => {
+      command     => "\e[?7t",
+      description => 'toggle wraparound mode.',
+    },
+    backspace => {
+      command     => "\e[?67t",
+      description => 'toggle if the backspace key should send BS or DEL',
+    },
+    ttyscroll => {
+      command     => "\e[?1010t",
+      description => 'scroll to bottom on TTY output',
+    },
+    scrollkey => {
+      command     => "\e[?1011t",
+      description => "scroll to bottom when key is pressed",
+    },
+    alternate => {
+      command     => "\e[?1049t",
+      description => 'use the alternate screen buffer',
+    },
+  };
+}
+
+=pod
+
+=head1 NAME
+
+termprop - set terminal properties
+
+=head1 COMMANDS
+
+    alternate         use the alternate screen buffer
+    backspace         toggle if the backspace key should send BS or DEL
+      columns         toggle 132/80 columns mode
+      reverse         toggle reverse video
+    scrollbar         toggle scrollbar visibility
+    scrollkey         scroll to bottom when key is pressed
+    ttyscroll         scroll to bottom on TTY output
+         wrap         toggle wraparound mode.
+
+=head1 OPTIONS
+
+    -h,    --help     show the help and exit
+    -m,    --man      show the manual and exit
+    -v,    --version  show version info and exit
+
+=head1 ENVIRONMENT
+
+=head1 AUTHOR
+
+  Magnus Woldrich
+  CPAN ID: WOLDRICH
+  magnus@trapd00r.se
+  http://japh.se
+
+=head1 CONTRIBUTORS
+
+None required yet.
+
+=head1 REPORTING BUGS
+
+Report bugs and/or feature requests to <m@japh.se>, on L<rt.cpan.org>
+or L<http://github.com/trapd00r/termprop/issues>.
+
+=head1 COPYRIGHT
+
+Copyright 2011 the B<termprop> L</AUTHOR> and L</CONTRIBUTORS> as
+listed above.
+
+=head1 LICENSE
+
+This application is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=head1 SEE ALSO
+
+L<urxvt(7)>
+
+L<urxvt(1)>
+
+L<console_codes(4)>
+
+L<ctlseq|http://devel.japh.se/App-termprop/doc/ctlseq.txt>
+
+=cut
