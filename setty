@@ -1,23 +1,32 @@
 #!/usr/bin/perl
 use strict;
 use warnings FATAL => 'all';
-my  $APP     = 'termprop';
+my  $APP     = 'SeTTY';
 our $VERSION = '0.010';
 
 my $options;
 
 if(!@ARGV) {
 
+  print << "...";
+$APP v$VERSION
+Usage: $APP [COMMAND]
+
+  \e[1mOPTIONS\e[m
+...
+
   for my $option(sort(keys(%{ $options }))) {
-    printf("%13s %s\n", $option, $options->{$option}->{description});
+    printf("%13s  %s\n", $option, $options->{$option}->{description});
   }
   exit;
 }
 
 my $action = shift;
 
+die "No such option\n" if not exists( $options->{ $action } );
 
 print $options->{ $action }->{command};
+
 
 BEGIN {
   $options = {
@@ -60,24 +69,28 @@ BEGIN {
 
 =head1 NAME
 
-termprop - set terminal properties
+SeTTY - set terminal properties
+
+=head1 USAGE
+
+setty [COMMAND]
 
 =head1 COMMANDS
 
-    alternate         use the alternate screen buffer
-    backspace         toggle if the backspace key should send BS or DEL
-      columns         toggle 132/80 columns mode
-      reverse         toggle reverse video
-    scrollbar         toggle scrollbar visibility
-    scrollkey         scroll to bottom when key is pressed
-    ttyscroll         scroll to bottom on TTY output
-         wrap         toggle wraparound mode.
+    alternate  use the alternate screen buffer
+    backspace  toggle if the backspace key should send BS or DEL
+    columns    toggle 132/80 columns mode
+    reverse    toggle reverse video
+    scrollbar  toggle scrollbar visibility
+    scrollkey  scroll to bottom when key is pressed
+    ttyscroll  scroll to bottom on TTY output
+    wrap       toggle wraparound mode.
 
 =head1 OPTIONS
 
-    -h,    --help     show the help and exit
-    -m,    --man      show the manual and exit
-    -v,    --version  show version info and exit
+    --help     show the help and exit
+    --man      show the manual and exit
+    --version  show version info and exit
 
 =head1 ENVIRONMENT
 
@@ -95,11 +108,11 @@ None required yet.
 =head1 REPORTING BUGS
 
 Report bugs and/or feature requests to <m@japh.se>, on L<rt.cpan.org>
-or L<http://github.com/trapd00r/termprop/issues>.
+or L<http://github.com/trapd00r/SeTTY/issues>.
 
 =head1 COPYRIGHT
 
-Copyright 2011 the B<termprop> L</AUTHOR> and L</CONTRIBUTORS> as
+Copyright 2011 the B<SeTTY> L</AUTHOR> and L</CONTRIBUTORS> as
 listed above.
 
 =head1 LICENSE
@@ -115,6 +128,6 @@ L<urxvt(1)>
 
 L<console_codes(4)>
 
-L<ctlseq|http://devel.japh.se/App-termprop/doc/ctlseq.txt>
+L<ctlseq|http://devel.japh.se/App-SeTTY/doc/ctlseq.txt>
 
 =cut
