@@ -22,6 +22,9 @@ setty [COMMAND]
     vt52        ANSI/VT52 mode
     wrap        toggle wraparound mode.
 
+    foreground  set foreground color
+    background  set background color
+
 =head1 OPTIONS
 
     --help     show the help and exit
