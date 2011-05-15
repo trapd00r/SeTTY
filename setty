@@ -2,7 +2,7 @@
 use strict;
 #use warnings FATAL => 'all';
 my  $APP     = 'SeTTY';
-our $VERSION = '0.024';
+our $VERSION = '0.026';
 
 my $options;
 
@@ -29,7 +29,12 @@ my $action = shift;
 
 die "No such option\n" if not exists( $options->{ $action } );
 
-print $options->{ $action }->{command};
+if(ref($options->{ $action }->{command}) eq 'CODE') {
+  print $options->{ $action }->{command}->(@ARGV);
+}
+else {
+  print $options->{ $action }->{command};
+}
 
 
 BEGIN {
@@ -97,6 +102,14 @@ BEGIN {
       description => 'text cursor enable mode',
       desc_set    => 'visible',
       desc_reset  => 'invisible',
+    },
+    background => {
+      command     => sub { my $c = shift; "\e]11;#$c\007"; },
+      description => 'set background color',
+    },
+    foreground => {
+      command     => sub { my $c = shift; "\e]10;#$c\007"; },
+      description => 'set foreground color',
     },
   };
 }
