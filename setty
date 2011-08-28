@@ -80,6 +80,7 @@ BEGIN {
       desc_reset  => 'do not scroll to bottom on keypress',
     },
     alternate  => {
+      # ?47h  ?47l
       command     => "\e[?1049t",
       description => 'alternate screen mode',
       desc_set    => 'use alternate screen buffer',
@@ -110,6 +111,10 @@ BEGIN {
     foreground => {
       command     => sub { my $c = shift; "\e]10;#$c\007"; },
       description => 'set foreground color',
+    },
+    paste      => {
+      command     => "\e[?2004h",
+      description => 'bracketed paste mode',
     },
   };
 }
